@@ -1,48 +1,44 @@
 package com.example.androidproject
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.androidproject.ui.theme.AndroidProjectTheme
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.androidproject.presentation.screen.xml.NumberAdapter
+import com.example.androidproject.data.model.NumberItem
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
+    lateinit var recyclerView: RecyclerView
+    lateinit var addButton: android.widget.Button
+    private val adapter: NumberAdapter = NumberAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            AndroidProjectTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
+        setContentView(R.layout.activity_xml_number_list)
+
+        recyclerView = findViewById(R.id.recyclerView)
+        addButton = findViewById(R.id.addButton)
+
+        setupRecyclerView()
+
+        recyclerView.adapter = adapter
+
+        addButton.setOnClickListener {
+            adapter.update(ArrayList<NumberItem>(adapter.items).apply {
+                val newId = this.size
+                this.add(NumberItem(newId, newId % 2 == 0))
+            })
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    private fun setupRecyclerView() {
+        val spanCount = if (resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE) {
+            4
+        } else {
+            3
+        }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AndroidProjectTheme {
-        Greeting("Android")
+        recyclerView.layoutManager = GridLayoutManager(this, spanCount)
     }
 }
-
