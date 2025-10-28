@@ -1,34 +1,39 @@
 package com.example.androidproject
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidproject.presentation.screen.xml.NumberAdapter
 import com.example.androidproject.data.model.NumberItem
+import com.example.androidproject.presentation.screen.xml.NumberAdapter
+import com.example.androidproject.presentation.screen.NumberViewModel
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var addButton: android.widget.Button
+    lateinit var button: android.widget.Button
+//    lateinit var button: FloatingActionButton
     private val adapter: NumberAdapter = NumberAdapter()
+    private val viewModel: NumberViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_xml_number_list)
 
         recyclerView = findViewById(R.id.recyclerView)
-        addButton = findViewById(R.id.addButton)
+        button = findViewById(R.id.button)
 
         setupRecyclerView()
 
+        adapter.update(ArrayList(viewModel.numbers))
+
         recyclerView.adapter = adapter
 
-        addButton.setOnClickListener {
-            adapter.update(ArrayList<NumberItem>(adapter.items).apply {
-                val newId = this.size
-                this.add(NumberItem(newId, newId % 2 == 0))
-            })
+        button.setOnClickListener {
+            viewModel.addNumberItem()
+            adapter.update(ArrayList(viewModel.numbers))
         }
     }
 
