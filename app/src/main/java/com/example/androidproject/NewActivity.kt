@@ -3,14 +3,8 @@ package com.example.androidproject
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.androidproject.presentation.screen.NumberViewModel
-import com.example.androidproject.presentation.screen.xml.NumberAdapter
-import kotlinx.coroutines.newSingleThreadContext
-import kotlin.getValue
+
 
 class NewActivity : AppCompatActivity() {
 
