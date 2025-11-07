@@ -1,12 +1,16 @@
 package com.example.androidproject.presentation.screen.xml
 
+import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.view.menu.MenuView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.androidproject.NewActivity
 import com.example.androidproject.R
 import com.example.androidproject.data.model.NumberItem
 
@@ -51,8 +55,20 @@ class NumberViewHolder(view: View): RecyclerView.ViewHolder(view){
         numberText.text = number.id.toString()
         val bgColor = if (number.isEven) Color.RED else Color.BLUE
         numberText.setBackgroundColor(bgColor)
+
+        itemView.setOnClickListener {
+            val intent = Intent(itemView.context, NewActivity::class.java)
+            intent.putExtra("num_id", number.id)
+            intent.putExtra("num_is_even", number.isEven)
+
+            itemView.context.startActivity(intent)
+        }
+
+
     }
 }
+
+
 
 class NumberDifferCallback(val oldItems: List<NumberItem>, val newItems: List<NumberItem>): DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldItems.size

@@ -3,12 +3,10 @@ package com.example.androidproject
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.androidproject.data.model.NumberItem
-import com.example.androidproject.presentation.screen.xml.NumberAdapter
 import com.example.androidproject.presentation.screen.NumberViewModel
+import com.example.androidproject.presentation.screen.xml.NumberAdapter
 
 class MainActivity : AppCompatActivity() {
 
